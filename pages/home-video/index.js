@@ -9,14 +9,12 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 生命周期函数--监听页面加载（created）
    */
-  onLoad: function (options) {
-    getTopMV(0).then((res) => {
-      console.log(res);
-      this.setData({
-        topMVs: res.data,
-      });
+  onLoad: async function (options) {
+    const res = await getTopMV(0)
+    this.setData({
+      topMVs: res.data,
     });
   },
 });
