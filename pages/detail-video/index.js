@@ -19,7 +19,7 @@ Page({
 
     // 2.获取页面的数据
     this.getPageData(id)
-
+    
     // 3.其他逻辑
   },
   getPageData: function(id) {

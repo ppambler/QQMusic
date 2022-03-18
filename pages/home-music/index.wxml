@@ -1,2 +1,11 @@
 <!--pages/home-music/index.wxml-->
 <text>pages/home-music/index.wxml</text>
+<van-search 
+  disabled 
+  background="#fafafa" 
+  shape="round" 
+  placeholder="请输入搜索关键词" 
+  bind:click-input="handleSearchClick"
+/>
+
+
