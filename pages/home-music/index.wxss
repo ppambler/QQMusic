@@ -3,3 +3,15 @@
 .van-search__content {
   background-color: #fff !important;
 }
+
+/* 轮播图样式 */
+/* .swiper {
+} */
+
+.swiper-item {
+  display: flex;
+}
+
+.swiper-item .swiper-image {
+  width: 100%;
+}
