@@ -1,12 +1,25 @@
 /* pages/home-music/index.wxss */
 
+page {
+  padding: 0 20rpx;
+}
+
+.van-search {
+  padding: 10px 0 !important;
+}
+
 .van-search__content {
   background-color: #fff !important;
 }
 
 /* 轮播图样式 */
-/* .swiper {
-} */
+.swiper {
+  border-radius: 10rpx;
+  /* 超出圆角边框范围的给隐藏掉 */
+  overflow: hidden;
+  /* 适配不显示圆角边框的真机 */
+  transform: translateY(0);
+}
 
 .swiper-item {
   display: flex;
