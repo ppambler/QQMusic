@@ -2,7 +2,7 @@
 // 放在这个位置，是为了和其它导入作区分
 import { rankingStore } from '../../store/index'
 
-import { getBanners } from '../../service/api_music'
+import { getBanners, getSongMenu } from '../../service/api_music'
 import queryRect from '../../utils/query-rect'
 import throttle from '../../utils/throttle'
 
@@ -13,7 +13,9 @@ Page({
   data: {
     swiperHeight: 0,
     banners: [],
-    recommendSongs: []
+    recommendSongs: [],
+    hotSongMenu: [],
+    recommendSongMenu: [],
   },
 
   // 生命周期函数
@@ -42,6 +44,12 @@ Page({
   getPageData: function() {
     getBanners().then(res => {
       this.setData({ banners: res.banners })
+    })
+    getSongMenu().then(res => {
+      this.setData({ hotSongMenu: res.playlists })
+    })
+    getSongMenu("华语").then(res => {
+      this.setData({ recommendSongMenu: res.playlists })
     })
   },
 
