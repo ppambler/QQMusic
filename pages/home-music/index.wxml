@@ -26,7 +26,7 @@
 </swiper>
 
 <!-- 3.推荐歌曲 -->
-<!-- <view class="recommend-song">
+<!-- <view class="recommend-song" wx:if="{{recommendSongs.length > 0}}">
   <area-header title="推荐歌曲"></area-header>
   <view class="song-list">
     <block wx:for="{{recommendSongs}}" wx:key="id">
@@ -36,6 +36,12 @@
 </view> -->
 
 <!-- 4.热门/推荐歌单 -->
-<song-menu-area title="热门歌单" songMenu="{{hotSongMenu}}"></song-menu-area>
-<song-menu-area title="推荐歌单" songMenu="{{recommendSongMenu}}"></song-menu-area>
+<song-menu-area title="热门歌单"
+                songMenu="{{hotSongMenu}}"
+                wx:if="{{hotSongMenu.length > 0}}">
+</song-menu-area>
+<song-menu-area title="推荐歌单"
+                songMenu="{{recommendSongMenu}}"
+                wx:if="{{recommendSongMenu.length > 0}}">
+</song-menu-area>
 
