@@ -16,7 +16,8 @@ Page({
     recommendSongs: [],
     hotSongMenu: [],
     recommendSongMenu: [],
-    rankings: { 0: {}, 2: {}, 3: {} }
+    rankings: { 0: {}, 2: {}, 3: {} },
+    rankingsFlag: []
   },
 
   // 生命周期函数
@@ -47,17 +48,20 @@ Page({
   getRankingHandler: function(idx) {
     return (res) => {
       if (Object.keys(res).length === 0) return
-      console.log("idx:", idx)
+      // console.log("idx:", idx)
       const name = res.name
       const coverImgUrl = res.coverImgUrl
       const playCount = res.playCount
       const songList = res.tracks.slice(0, 3)
       const rankingObj = {name, coverImgUrl, playCount, songList}
       const newRankings = { ...this.data.rankings, [idx]: rankingObj}
+      const flag = this.data.rankingsFlag
+      flag.push(true)
       this.setData({ 
-        rankings: newRankings
+        rankings: newRankings,
+        rankingsFlag: flag
       })
-      console.log(this.data.rankings)
+      // console.log(this.data.rankings)
     }
   },
   // 网络请求

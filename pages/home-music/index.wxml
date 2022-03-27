@@ -45,3 +45,12 @@
                 wx:if="{{recommendSongMenu.length > 0}}">
 </song-menu-area> -->
 
+<!-- 5.巅峰榜 -->
+<view class="ranking" wx:if="{{rankingsFlag.length === 3}}">
+  <area-header title="巅峰榜" showRight="{{false}}"></area-header>
+  <view class="ranking-list">
+    <block wx:for="{{rankings}}" wx:key="name">
+      <ranking-area-item item="{{item}}"></ranking-area-item>
+    </block>
+  </view>
+</view>
