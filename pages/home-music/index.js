@@ -16,6 +16,7 @@ Page({
     recommendSongs: [],
     hotSongMenu: [],
     recommendSongMenu: [],
+    rankings: { 0: {}, 2: {}, 3: {} }
   },
 
   // 生命周期函数
@@ -35,11 +36,30 @@ Page({
       // console.log(recommendSongs)
       this.setData({ recommendSongs })
     })
+    rankingStore.onState("newRanking", this.getRankingHandler(0))
+    rankingStore.onState("originRanking", this.getRankingHandler(2))
+    rankingStore.onState("upRanking", this.getRankingHandler(3))
   },
 
   onUnload: function () {
+    // rankingStore.offState("newRanking", this.getNewRankingHandler)
   },
-
+  getRankingHandler: function(idx) {
+    return (res) => {
+      if (Object.keys(res).length === 0) return
+      console.log("idx:", idx)
+      const name = res.name
+      const coverImgUrl = res.coverImgUrl
+      const playCount = res.playCount
+      const songList = res.tracks.slice(0, 3)
+      const rankingObj = {name, coverImgUrl, playCount, songList}
+      const newRankings = { ...this.data.rankings, [idx]: rankingObj}
+      this.setData({ 
+        rankings: newRankings
+      })
+      console.log(this.data.rankings)
+    }
+  },
   // 网络请求
   getPageData: function() {
     getBanners().then(res => {
