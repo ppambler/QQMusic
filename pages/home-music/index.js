@@ -1,6 +1,6 @@
 // pages/home-music/index.js
 // 放在这个位置，是为了和其它导入作区分
-import { rankingStore } from '../../store/index'
+import { rankingStore,rankingMap } from '../../store/index'
 
 import { getBanners, getSongMenu } from '../../service/api_music'
 import queryRect from '../../utils/query-rect'
@@ -40,6 +40,22 @@ Page({
     rankingStore.onState("newRanking", this.getRankingHandler(0))
     rankingStore.onState("originRanking", this.getRankingHandler(2))
     rankingStore.onState("upRanking", this.getRankingHandler(3))
+  },
+
+  handleMoreClick: function() {
+    this.navigateToDetailSongsPage("hotRanking")
+  },
+
+  handleRankingItemClick: function(event) {
+    const idx = event.currentTarget.dataset.idx
+    const rankingName = rankingMap[idx]
+    this.navigateToDetailSongsPage(rankingName)
+  },
+
+  navigateToDetailSongsPage: function(rankingName) {
+    wx.navigateTo({
+      url: `/pages/detail-songs/index?ranking=${rankingName}`,
+    })
   },
 
   onUnload: function () {
