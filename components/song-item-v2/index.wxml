@@ -1,0 +1,15 @@
+<!--components/song-item-v2/index.wxml-->
+<view class="item">
+  <view class="index">{{index}}</view>
+  <view class="info">
+    <view class="name">{{item.name}}</view>
+    <view class="source">
+      <!-- 这个音质统一用了一样的图片，实在不知道这里边的属性代表什么数据 -->
+      <image class="icon" src="/assets/images/icons/sq_icon.png"></image>
+      <text>{{item.ar[0].name}} </text>
+      <!-- 有写 item 是没有歌曲别名的 -->
+      <text wx:if="{{item.alia[0]}}" class="dots">·</text>
+      <text wx:if="{{item.alia[0]}}">{{item.alia[0]}}</text>
+    </view>
+  </view>
+</view>
