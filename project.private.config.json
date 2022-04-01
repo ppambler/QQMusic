@@ -28,6 +28,13 @@
           "name": "detail-songs",
           "pathName": "pages/detail-songs/index",
           "query": "id=7050074027&type=menu",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "search",
+          "pathName": "pages/detail-search/index",
+          "query": "",
           "scene": null,
           "launchMode": "default"
         }
