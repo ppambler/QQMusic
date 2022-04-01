@@ -23,6 +23,13 @@
           "pathName": "pages/detail-video/index",
           "query": "id=14480854",
           "scene": null
+        },
+        {
+          "name": "detail-songs",
+          "pathName": "pages/detail-songs/index",
+          "query": "id=7050074027&type=menu",
+          "scene": null,
+          "launchMode": "default"
         }
       ]
     }
