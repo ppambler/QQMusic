@@ -6,6 +6,7 @@ page {
 /* 热门搜索 */
 .hot {
   padding: 10rpx;
+  background-color: #f7f7f7;
 }
 
 .hot .list {
@@ -24,4 +25,31 @@ page {
 
 .hot .tag:first-of-type {
   color: #26ce8a;
+}
+
+/* 建议搜索 */
+.suggest {
+  padding: 10rpx;
+  background-color: #f7f7f7;
+}
+
+.suggest .title {
+  color: #26ce8a;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.suggest .item {
+  display: flex;
+  align-items: center;
+  margin-top: 16rpx;
+}
+
+.suggest .item .icon {
+  width: 66rpx;
+  margin-left: -20rpx;
+}
+
+.suggest .item .text {
+  font-size: 28rpx;
 }
