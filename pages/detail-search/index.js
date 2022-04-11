@@ -1,6 +1,7 @@
 // pages/detail-search/index.js
 import { getSearchHot, getSearchSuggest } from '../../service/api_search'
 import debounce from '../../utils/debounce'
+import stringToNodes from '../../utils/string2nodes'
 
 const debounceGetSearchSuggest = debounce(getSearchSuggest, 300)
 
@@ -48,31 +49,7 @@ Page({
       const suggestKeywords = suggestSongs.map(item => item.keyword)
       const suggestSongsNodes = []
       for (const keyword of suggestKeywords) {
-        const nodes = []
-        if (keyword.toUpperCase().startsWith(searchValue.toUpperCase())) {
-          const key1 = keyword.slice(0, searchValue.length)
-          const node1 = {
-            name: "span",
-            attrs: { style: "color: #26ce8a;" },
-            children: [ { type: "text", text: key1 } ]
-          }
-          nodes.push(node1)
-      
-          const key2 = keyword.slice(searchValue.length)
-          const node2 = {
-            name: "span",
-            attrs: { style: "color: #000000;" },
-            children: [ { type: "text", text: key2 } ]
-          }
-          nodes.push(node2)
-        } else {
-          const node = {
-            name: "span",
-            attrs: { style: "color: #000000;" },
-            children: [ { type: "text", text: keyword } ]
-          } 
-          nodes.push(node)
-        }
+        const nodes = stringToNodes(keyword, searchValue)
         suggestSongsNodes.push(nodes)
       }
       this.setData({ suggestSongsNodes })
