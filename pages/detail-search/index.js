@@ -37,6 +37,7 @@ Page({
     if (!searchValue.length) {
       // 输入框内容为空，那么搜索建议也要清空
       this.setData({ suggestSongs: [] })
+      this.setData({ resultSongs: [] })
       return
     }
 
@@ -74,12 +75,12 @@ Page({
     // 3.发送网络请求
     this.handleSearchAction()
   },
-  handleTagItemClick: function(event) {
+  handleKeywordItemClick: function(event) {
     // 1.获取点击的标签
-    const tag = event.currentTarget.dataset.tag
+    const keyword = event.currentTarget.dataset.keyword
 
     // 2.将关键设置到searchValue中
-    this.setData({ searchValue: tag })
+    this.setData({ searchValue: keyword })
 
     // 3.发送网络请求
     this.handleSearchAction()

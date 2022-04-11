@@ -15,7 +15,7 @@
   <area-header title="热门搜索" showRight="{{false}}"></area-header>
   <view class="list">
     <block wx:for="{{hotKeywords}}" wx:key="first">
-      <view class="tag" bindtap="handleTagItemClick" data-tag="{{item.first}}">{{item.first}}</view>
+      <view class="tag" bindtap="handleKeywordItemClick" data-keyword="{{item.first}}">{{item.first}}</view>
     </block>
   </view>
 </view>
@@ -25,11 +25,11 @@
 <view class="suggest" wx:elif="{{suggestSongs.length && !resultSongs.length}}">
   <view class="title">搜索"{{searchValue}}"</view>
   <view class="list">
-    <block wx:for="{{suggestSongsNodes}}" wx:key="keyword">
-      <view class="item" bindtap="handleSuggestItemClick" data-index="{{index}}">
+    <block wx:for="{{suggestSongs}}" wx:key="keyword">
+      <view class="item" bindtap="handleKeywordItemClick" data-keyword="{{item.keyword}}">
         <image class="icon" mode="widthFix" src="/assets/images/icons/search_icon.png"></image>
         <!-- <text class="text">{{item.keyword}}</text> -->
-        <rich-text nodes="{{item}}"></rich-text>
+        <rich-text nodes="{{suggestSongsNodes[index]}}"></rich-text>
       </view>
     </block>
   </view>
