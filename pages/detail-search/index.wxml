@@ -21,8 +21,8 @@
 </view>
 
 <!-- 建议搜索 -->
-<!-- 其实不建议用 wx:else，因为后续还要要渲染的视图，建议用 wx:if -->
-<view class="suggest" wx:else>
+<!-- 其实不建议用 wx:else，因为后续还要要渲染的视图，建议用 wx:elif -->
+<view class="suggest" wx:elif="{{suggestSongs.length && !resultSongs.length}}">
   <view class="title">搜索"{{searchValue}}"</view>
   <view class="list">
     <block wx:for="{{suggestSongsNodes}}" wx:key="keyword">
