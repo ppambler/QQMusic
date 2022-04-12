@@ -64,17 +64,6 @@ Page({
       this.setData({ resultSongs: res.result.songs })
     })
   },
-  handleSuggestItemClick: function(event) {
-    // 1.获取点击的关键字
-    const index = event.currentTarget.dataset.index
-    const keyword = this.data.suggestSongs[index].keyword
-
-    // 2.将关键设置到searchValue中
-    this.setData({ searchValue: keyword })
-
-    // 3.发送网络请求
-    this.handleSearchAction()
-  },
   handleKeywordItemClick: function(event) {
     // 1.获取点击的标签
     const keyword = event.currentTarget.dataset.keyword

@@ -2,9 +2,11 @@
 <!-- 1.搜索框的开发 -->
 <!-- 让 value 和 seachValue 绑定在一起，这是规范 -->
 <van-search
+  class="search"
   value="{{searchValue}}"
   background="#f7f7f7"
   shape="round"
+  show-action="{{searchValue}}"
   bind:change="handleSearchChange"
   bind:search="handleSearchAction"
 ></van-search>
@@ -36,3 +38,11 @@
 </view>
 
 <!-- 搜索结果 -->
+<view class="result" wx:elif="{{ resultSongs.length }}">
+  <view class="title">最佳匹配</view>
+  <view class="list">
+    <block wx:for="{{resultSongs}}" wx:key="id">
+      <song-item-v2 item="{{item}}" index="{{index+1}}"></song-item-v2>
+    </block>
+  </view>
+</view>
