@@ -19,3 +19,18 @@ page {
   /* 给 blur 的参数越大，背景的图案轮廓越模糊*/
   backdrop-filter: blur(30px);
 }
+
+/* 自定义导航 */
+.tab {
+  display: flex;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.tab .divider {
+  margin: 0 10rpx;
+}
+
+.tab .active {
+  color: #fff;
+}

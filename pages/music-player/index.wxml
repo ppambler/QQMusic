@@ -6,11 +6,9 @@
 <!-- 2.导航 -->
 <nav-bar>
   <view slot="title" class="tab">
-    <view>歌曲</view>
-    <view>歌词</view>
-  </view>
-  <view slot="left" class="left">
-    <view>💡</view>
+    <view class="{{currentPage === 0 ? 'active': ''}}">歌曲</view>
+    <view class="divider">|</view>
+    <view class="{{currentPage === 1 ? 'active': ''}}">歌词</view>
   </view>
 </nav-bar>
 

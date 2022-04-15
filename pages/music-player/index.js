@@ -7,7 +7,8 @@ Page({
    */
   data: {
     id: 0,
-    currentSong: {}
+    currentSong: {},
+    currentPage: 0
   },
   onLoad: function (options) {
     // 1.获取传入的id
