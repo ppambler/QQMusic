@@ -36,8 +36,10 @@ Page({
     // 3.判断关键字为空字符的处理逻辑
     if (!searchValue.length) {
       // 输入框内容为空，那么搜索建议也要清空
-      this.setData({ suggestSongs: [] })
-      this.setData({ resultSongs: [] })
+      // this.setData({ suggestSongs: [] })
+      // this.setData({ resultSongs: [] })
+      this.setData({ suggestSongs: [], resultSongs: [] })
+      debounceGetSearchSuggest.cancel()
       return
     }
 
@@ -46,6 +48,7 @@ Page({
       // 1.获取建议的关键字歌曲
       const suggestSongs = res.result.allMatch
       this.setData({ suggestSongs })
+      if (!suggestSongs) return
 
        // 2.转成 nodes 节点
       const suggestKeywords = suggestSongs.map(item => item.keyword)
