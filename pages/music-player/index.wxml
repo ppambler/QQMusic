@@ -2,5 +2,15 @@
 <!-- 1.背景 -->
 <image class="bg-image" mode="aspectFill" src="{{currentSong.al.picUrl}}"></image>
 <view class="bg-cover"></view>
-<text>Hello!</text>
+
+<!-- 2.导航 -->
+<nav-bar>
+  <view slot="title" class="tab">
+    <view>歌曲</view>
+    <view>歌词</view>
+  </view>
+  <view slot="left" class="left">
+    <view>💡</view>
+  </view>
+</nav-bar>
 

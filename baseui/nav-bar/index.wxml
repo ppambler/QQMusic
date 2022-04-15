@@ -1,0 +1,22 @@
+<!--baseui/nav-bar/index.wxml-->
+<view class="nav">
+  <view style="height: {{statusBarHeight}}px;"></view>
+  <view class="nav-bar" style="height: {{navBarHeight}}px;">
+    <view class="left">
+    <!-- 用到多个插槽需要指定名字 -> 注意书写顺序问题，插槽的在默认展示的上边 -->
+      <view class="left-slot">
+        <slot name="left"></slot>
+      </view>
+      <view class="left-arrow">
+        <image class="icon" mode="widthFix" src="/assets/images/icons/arrow-left.png"></image>
+      </view>
+    </view>
+    <view class="center">
+      <view class="center-slot">
+        <slot name="title"></slot>
+      </view>
+      <view class="center-title">{{title}}</view>
+    </view>
+    <view class="right"></view>
+  </view>
+</view>
