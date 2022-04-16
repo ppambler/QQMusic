@@ -12,3 +12,8 @@
   </view>
 </nav-bar>
 
+<!-- 3.内容 -->
+<swiper class="content" style="height: {{contentHeight}}px;" bindchange="handleSwiperChange">
+  <swiper-item class="music">1</swiper-item>
+  <swiper-item class="music">2</swiper-item>
+</swiper>
