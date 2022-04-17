@@ -5,6 +5,7 @@ App({
     this.globalData.statusBarHeight = info.statusBarHeight
     this.globalData.screenWidth = info.screenWidth
     this.globalData.screenHeight = info.screenHeight
+    console.log(info)
   },
   globalData: {
     statusBarHeight: 0,
