@@ -9,7 +9,8 @@ Page({
     id: 0,
     currentSong: {},
     currentPage: 0,
-    contentHeight: 0
+    contentHeight: 0,
+    isMusicLyric: true
   },
   onLoad: function (options) {
     // 1.获取传入的id
@@ -24,13 +25,14 @@ Page({
      const screenHeight = globalData.screenHeight
      const statusBarHeight = globalData.statusBarHeight
      const navBarHeight = globalData.navBarHeight
+     const deviceRadio = globalData.deviceRadio
      const contentHeight = screenHeight - statusBarHeight - navBarHeight
-     this.setData({ contentHeight })
+     this.setData({ contentHeight, isMusicLyric: deviceRadio >= 2 })
 
      // 4.创建播放器
     const audioContext = wx.createInnerAudioContext()
     audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
-    audioContext.play()
+    // audioContext.play()
   },
   // 网络请求
   getPageData: function (id) {
