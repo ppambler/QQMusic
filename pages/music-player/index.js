@@ -1,6 +1,7 @@
 // pages/music-player/index.js
-import { getSongDetail } from '../../service/api_player'
+import { getSongDetail,getSongLyric } from '../../service/api_player'
 import { audioContext } from '../../store/index'
+import { parseLyric } from '../../utils/parse-lyric'
 
 Page({
   /**
@@ -50,6 +51,11 @@ Page({
     getSongDetail(id).then(res => {
       this.setData({ currentSong: res.songs[0], durationTime: res.songs[0].dt })
     })
+    getSongLyric(id).then(res => {
+      const lyricString = res.lrc.lyric
+      const lyrics = parseLyric(lyricString)
+      console.log(lyrics)
+    })
   },
   // ======================== audio 监听 ========================
   setupAudioContextListener: function() {
@@ -63,7 +69,7 @@ Page({
       // console.log("onTimeUpdate")
       // 1.获取当前时间
       // 读取的值是 s -> 19.634172
-      console.log(audioContext.currentTime)
+      // console.log(audioContext.currentTime)
       // 转成 ms
       const currentTime = audioContext.currentTime * 1000
 

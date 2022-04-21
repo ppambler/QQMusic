@@ -5,3 +5,9 @@ export function getSongDetail(ids) {
     ids
   })
 }
+
+export function getSongLyric(id) {
+  return hyRequest.get("/lyric", {
+    id
+  })
+}
