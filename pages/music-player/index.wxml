@@ -25,14 +25,19 @@
       <view class="subtitle">
         <view class="singer">{{currentSong.ar[0].name}}</view>
         <!-- 有些值会有书名号，有些则没有，所以我们不加了，不然会重复书名号 -->
-        <view class="alias">专辑: {{currentSong.alia[0]}}</view>
+        <view class="alias">专辑: {{currentSong.alia[0] || currentSong.ar[0].name}}</view>
       </view>
     </view>
     <view class="lyric" wx:if="{{isMusicLyric}}">我是歌词, 哈哈哈哈哈哈</view>
     <view class="progress">
-      <slider class="slider" block-size="{{12}}"></slider>
+      <slider class="slider"
+              block-size="{{12}}" 
+              value="{{sliderValue}}"
+              bindchanging="handleSliderChanging"
+              bindchange="handleSliderChange">
+      </slider>
       <view class="time">
-        <view class="current">01:22</view>
+        <view class="current">{{format.formatDuration(currentTime)}}</view>
         <view class="duration">{{format.formatDuration(durationTime)}}</view>
       </view>
     </view>
