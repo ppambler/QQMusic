@@ -8,13 +8,19 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 关于歌曲的数据
     id: 0,
     currentSong: {},
+    durationTime: 0,
+    currentTime: 0,
+    lyricInfos: [],
+    currentLyricIndex: 0,
+    currentLyricText: "",
+
+    // 关于页面的数据
     currentPage: 0,
     contentHeight: 0,
     isMusicLyric: true,
-    durationTime: 0,
-    currentTime: 0,
     sliderValue: 0,
     isSliderChanging: false
   },
@@ -55,6 +61,7 @@ Page({
       const lyricString = res.lrc.lyric
       const lyrics = parseLyric(lyricString)
       console.log(lyrics)
+      this.setData({ lyricInfos: lyrics })
     })
   },
   // ======================== audio 监听 ========================
@@ -77,6 +84,21 @@ Page({
       if (!this.data.isSliderChanging) {
         const sliderValue = currentTime / this.data.durationTime * 100
         this.setData({ sliderValue, currentTime })
+      }
+
+      // 3.根据当前时间去查找播放的歌词
+      let i = 0
+      for (; i < this.data.lyricInfos.length; i++) {
+        const lyricInfo = this.data.lyricInfos[i]
+        if (currentTime < lyricInfo.time) {
+          break
+        }
+      }
+      // 设置当前歌词的索引和内容
+      const currentIndex = i - 1
+      if (this.data.currentLyricIndex !== currentIndex) {
+        const currentLyricInfo = this.data.lyricInfos[currentIndex]
+        this.setData({ currentLyricText: currentLyricInfo.text, currentLyricIndex: currentIndex })
       }
     })
   },

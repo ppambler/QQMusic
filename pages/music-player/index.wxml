@@ -28,11 +28,13 @@
         <view class="alias">专辑: {{currentSong.alia[0] || currentSong.ar[0].name}}</view>
       </view>
     </view>
-    <view class="lyric" wx:if="{{isMusicLyric}}">我是歌词, 哈哈哈哈哈哈</view>
+    <view class="lyric" wx:if="{{isMusicLyric}}">{{ currentLyricText }}</view>
     <view class="progress">
       <slider class="slider"
-              block-size="{{12}}" 
+              block-size="{{12}}"
               value="{{sliderValue}}"
+              block-color="#26ce8a"
+              activeColor="#26ce8a"
               bindchanging="handleSliderChanging"
               bindchange="handleSliderChange">
       </slider>

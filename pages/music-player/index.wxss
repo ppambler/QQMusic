@@ -83,6 +83,8 @@ page {
   align-items: center;
   justify-content: center;
   flex: 1;
+  font-size: 28rpx;
+  color: #ffffff;
 }
 
 /* 进度 */
