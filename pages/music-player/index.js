@@ -22,7 +22,8 @@ Page({
     contentHeight: 0,
     isMusicLyric: true,
     sliderValue: 0,
-    isSliderChanging: false
+    isSliderChanging: false,
+    lyricScrollTop: 0
   },
   onLoad: function (options) {
     // 1.获取传入的id
@@ -98,7 +99,11 @@ Page({
       const currentIndex = i - 1
       if (this.data.currentLyricIndex !== currentIndex) {
         const currentLyricInfo = this.data.lyricInfos[currentIndex]
-        this.setData({ currentLyricText: currentLyricInfo.text, currentLyricIndex: currentIndex })
+        this.setData({ 
+          currentLyricText: currentLyricInfo.text, 
+          currentLyricIndex: currentIndex,
+          lyricScrollTop: currentIndex * 35
+        })
       }
     })
   },
