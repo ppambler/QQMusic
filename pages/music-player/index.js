@@ -1,7 +1,5 @@
 // pages/music-player/index.js
-import { getSongDetail,getSongLyric } from '../../service/api_player'
-import { audioContext } from '../../store/index'
-import { parseLyric } from '../../utils/parse-lyric'
+import { audioContext, playerStore } from '../../store/index'
 
 Page({
   /**
@@ -29,9 +27,9 @@ Page({
     // 1.获取传入的id
     const id = options.id
     this.setData({ id })
-
-    // 2.根据id获取歌曲信息
-    this.getPageData(id)
+    
+    // 2.获取歌曲信息
+    this.setupPlayerStoreListener()
 
      // 3.动态计算内容高度
      const globalData = getApp().globalData
@@ -52,18 +50,6 @@ Page({
 
     // 5.audioContext 的事件监听
     this.setupAudioContextListener()
-  },
-  // ======================== 网络请求 ========================
-  getPageData: function (id) {
-    getSongDetail(id).then(res => {
-      this.setData({ currentSong: res.songs[0], durationTime: res.songs[0].dt })
-    })
-    getSongLyric(id).then(res => {
-      const lyricString = res.lrc.lyric
-      const lyrics = parseLyric(lyricString)
-      console.log(lyrics)
-      this.setData({ lyricInfos: lyrics })
-    })
   },
   // ======================== audio 监听 ========================
   setupAudioContextListener: function() {
@@ -88,6 +74,7 @@ Page({
       }
 
       // 3.根据当前时间去查找播放的歌词
+      if (!this.data.lyricInfos.length) return
       let i = 0
       for (; i < this.data.lyricInfos.length; i++) {
         const lyricInfo = this.data.lyricInfos[i]
@@ -137,6 +124,22 @@ Page({
 
     // 4.记录最新的 sliderValue, 并且需要将 isSliderChaning 设置回 false
     this.setData({ sliderValue: value, isSliderChanging: false })
+  },
+  // ======================== 数据监听 ========================
+  setupPlayerStoreListener: function() {
+    // 1.监听 currentSong/durationTime/lyricInfos
+    // 一个数据改了，就能触发事件，执行回调
+    playerStore.onStates(["currentSong", "durationTime", "lyricInfos"], ({
+      currentSong,
+      durationTime,
+      lyricInfos
+    }) => {
+      console.log(lyricInfos)
+      // 某个数据改了才去修改，而不是一个数据改了，其它三个数据也得重新 setData 一下
+      if (currentSong) this.setData({ currentSong })
+      if (durationTime) this.setData({ durationTime })
+      if (lyricInfos) this.setData({ lyricInfos })
+    })
   },
   onUnload: function () {
   }
