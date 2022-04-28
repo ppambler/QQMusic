@@ -26,6 +26,14 @@ const playerStore = new HYEventStore({
         const lyrics = parseLyric(lyricString)
         ctx.lyricInfos = lyrics
       })
+
+      // 2.使用 audioContext 播放对应 id 的歌曲
+      // 在播放下一首歌之前，先把上一首歌给停止掉
+      audioContext.stop()
+      audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
+      // 你写了 onCanplay 里的 play 方法，那这句可以不写
+      // 加上这句是为了保险起见（有些设备不支持 autoplay）
+      audioContext.autoplay = true
     }
   }
 })

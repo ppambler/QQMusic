@@ -2,7 +2,7 @@
 <view class="nav">
   <view style="height: {{statusBarHeight}}px;"></view>
   <view class="nav-bar" style="height: {{navBarHeight}}px;">
-    <view class="left">
+    <view class="left" bindtap="handleLeftClick">
     <!-- 用到多个插槽需要指定名字 -> 注意书写顺序问题，插槽的在默认展示的上边，因为我们对 left-slot 这个 class 用了兄弟选择器 -->
       <view class="left-slot">
         <slot name="left"></slot>
