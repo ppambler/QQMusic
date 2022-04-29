@@ -9,7 +9,11 @@ const playerStore = new HYEventStore({
     id: 0,
     currentSong: {},
     durationTime: 0,
-    lyricInfos: []
+    lyricInfos: [],
+
+    currentTime: 0,
+    currentLyricIndex: 0,
+    currentLyricText: ""
   },
   actions: {
     playMusicWithSongIdAction(ctx, { id }) {
@@ -34,6 +38,46 @@ const playerStore = new HYEventStore({
       // 你写了 onCanplay 里的 play 方法，那这句可以不写
       // 加上这句是为了保险起见（有些设备不支持 autoplay）
       audioContext.autoplay = true
+
+      // 3.监听audioContext一些事件
+      this.dispatch("setupAudioContextListenerAction")
+    },
+    setupAudioContextListenerAction(ctx) {
+      // 1.监听歌曲可以播放
+      audioContext.onCanplay(() => {
+        // 缓存到可以播放歌曲了，那就播放歌曲
+        audioContext.play()
+      })
+      // 2.监听时间改变
+      audioContext.onTimeUpdate(() => {
+        // 歌曲正在播放就会触发这个事件
+        // console.log("onTimeUpdate")
+        // 1.获取当前时间
+        // 读取的值是 s -> 19.634172
+        // console.log(audioContext.currentTime)
+        // 转成 ms
+        const currentTime = audioContext.currentTime * 1000
+
+        // 2.根据当前时间修改 currentTime
+        ctx.currentTime = currentTime
+
+        // 3.根据当前时间去查找播放的歌词
+        if (!ctx.lyricInfos.length) return
+        let i = 0
+        for (; i < ctx.lyricInfos.length; i++) {
+          const lyricInfo = ctx.lyricInfos[i]
+          if (currentTime < lyricInfo.time) {
+            break
+          }
+        }
+        // 设置当前歌词的索引和内容
+        const currentIndex = i - 1
+        if (ctx.currentLyricIndex !== currentIndex) {
+          const currentLyricInfo = ctx.lyricInfos[currentIndex]
+          ctx.currentLyricText = currentLyricInfo.text
+          ctx.currentLyricIndex = currentIndex
+        }
+      })
     }
   }
 })
