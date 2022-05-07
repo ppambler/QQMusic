@@ -1,6 +1,8 @@
 // pages/music-player/index.js
 import { audioContext, playerStore } from '../../store/index'
 
+// 0: 顺序播放 1: 单曲循环 2: 随机播放
+const playModeNames = ["order", "repeat", "random"]
 Page({
   /**
    * 页面的初始数据
@@ -22,7 +24,11 @@ Page({
     isMusicLyric: true,
     sliderValue: 0,
     isSliderChanging: false,
-    lyricScrollTop: 0
+    lyricScrollTop: 0,
+
+    // 这两个数据是有关联的
+    playModeIndex: 0,
+    playModeName: "order",
   },
   onLoad: function (options) {
     // 1.获取传入的id
@@ -76,6 +82,14 @@ Page({
     // 一般返回的层级为一级就行了
     wx.navigateBack()
   },
+  handleModeBtnClick: function() {
+    // 计算最新的 playModeIndex
+    let playModeIndex = this.data.playModeIndex + 1
+    if (playModeIndex === 3) playModeIndex = 0
+
+    // 设置 playerStore 中的 playModeIndex -> 单向数据流
+    playerStore.setState("playModeIndex", playModeIndex)
+  },
   // ======================== 数据监听 ========================
   setupPlayerStoreListener: function() {
     // 1.监听 currentSong/durationTime/lyricInfos
@@ -110,6 +124,12 @@ Page({
       if (currentLyricText) {
         this.setData({ currentLyricText })
       }
+    })
+
+    // 3.监听播放模式相关的数据
+    // onState 是监听一个数据的数据（对应的传参不用解构），监听多个数据是 onStates（对应的传参需要解构）
+    playerStore.onState("playModeIndex", (playModeIndex) => {
+      this.setData({ playModeIndex, playModeName: playModeNames[playModeIndex] })
     })
   },
   onUnload: function () {
