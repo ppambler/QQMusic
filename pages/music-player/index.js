@@ -143,12 +143,14 @@ Page({
       // console.log("111",playModeIndex)
       // 为什么不是 if (playModeIndex)？ -> playModeIndex 可以是 0，解构的时候没有对应属性那就是 undefined 值了
       if (playModeIndex !== undefined) {
-        console.log("playModeIndex")
+        // console.log("playModeIndex")
         this.setData({ playModeIndex, playModeName: playModeNames[playModeIndex] })
       }
 
       if (isPlaying !== undefined) {
-        console.log('isPlaying')
+        // console.log('isPlaying')
+        // 一行代码过长，你可以写成这种形式
+        // 这里数据的变化无非就是更改 UI 罢了
         this.setData({ 
           isPlaying,
           playingName: isPlaying ? "pause": "resume" 
