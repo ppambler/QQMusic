@@ -16,10 +16,16 @@ const playerStore = new HYEventStore({
     currentLyricText: "",
 
     playModeIndex: 0, // 0: 顺序播放 1: 单曲循环 2: 随机播放
+
+    isPlaying: false, // 播放状态控制
   },
   actions: {
     playMusicWithSongIdAction(ctx, { id }) {
       ctx.id = id
+
+      // 0.修改播放的状态
+      ctx.isPlaying = true
+
       // 1.根据 id 请求数据
       // 请求歌曲详情
       getSongDetail(id).then(res => {
@@ -80,6 +86,11 @@ const playerStore = new HYEventStore({
           ctx.currentLyricIndex = currentIndex
         }
       })
+    },
+    // 暂停 & 播放控制
+    changeMusicPlayStatusAction(ctx) {
+      ctx.isPlaying = !ctx.isPlaying
+      ctx.isPlaying ? audioContext.play(): audioContext.pause()
     }
   }
 })

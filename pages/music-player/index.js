@@ -26,9 +26,13 @@ Page({
     isSliderChanging: false,
     lyricScrollTop: 0,
 
-    // 这两个数据是有关联的
+    // 播放模式（这两个数据是有关联的）
     playModeIndex: 0,
     playModeName: "order",
+
+    // 暂停与播放控制
+    isPlaying: false,
+    playingName: "pause",
   },
   onLoad: function (options) {
     // 1.获取传入的id
@@ -90,6 +94,10 @@ Page({
     // 设置 playerStore 中的 playModeIndex -> 单向数据流
     playerStore.setState("playModeIndex", playModeIndex)
   },
+
+  handlePlayBtnClick: function() {
+    playerStore.dispatch("changeMusicPlayStatusAction")
+  },
   // ======================== 数据监听 ========================
   setupPlayerStoreListener: function() {
     // 1.监听 currentSong/durationTime/lyricInfos
@@ -100,7 +108,7 @@ Page({
       lyricInfos
     }) => {
       console.log(lyricInfos)
-      // 某个数据改了才去修改，而不是一个数据改了，其它三个数据也得重新 setData 一下
+      // 有值才去修改
       if (currentSong) this.setData({ currentSong })
       if (durationTime) this.setData({ durationTime })
       if (lyricInfos) this.setData({ lyricInfos })
@@ -128,8 +136,24 @@ Page({
 
     // 3.监听播放模式相关的数据
     // onState 是监听一个数据的数据（对应的传参不用解构），监听多个数据是 onStates（对应的传参需要解构）
-    playerStore.onState("playModeIndex", (playModeIndex) => {
-      this.setData({ playModeIndex, playModeName: playModeNames[playModeIndex] })
+    playerStore.onStates(["playModeIndex","isPlaying"], (data) => {
+      // console.log('222',data)
+      // 关于这个状态管理库 -> 第一次会自动执行，也就是得到两个值，下一次的执行要等数据更新后，如果只有一个数据更新，那么拿到的只是这个数据更新过来的值
+      let { playModeIndex, isPlaying } = data
+      // console.log("111",playModeIndex)
+      // 为什么不是 if (playModeIndex)？ -> playModeIndex 可以是 0，解构的时候没有对应属性那就是 undefined 值了
+      if (playModeIndex !== undefined) {
+        console.log("playModeIndex")
+        this.setData({ playModeIndex, playModeName: playModeNames[playModeIndex] })
+      }
+
+      if (isPlaying !== undefined) {
+        console.log('isPlaying')
+        this.setData({ 
+          isPlaying,
+          playingName: isPlaying ? "pause": "resume" 
+        })
+      }
     })
   },
   onUnload: function () {
