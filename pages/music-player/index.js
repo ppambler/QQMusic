@@ -81,6 +81,9 @@ Page({
 
     // 4.记录最新的 sliderValue, 并且需要将 isSliderChaning 设置回 false
     this.setData({ sliderValue: value, isSliderChanging: false })
+    if(!this.data.isPlaying) { 
+      playerStore.setState("isPlaying", true)
+    }
   },
   handleBackBtnClick: function() {
     // 一般返回的层级为一级就行了
