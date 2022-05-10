@@ -110,7 +110,7 @@ Page({
       durationTime,
       lyricInfos
     }) => {
-      console.log(lyricInfos)
+      // console.log(lyricInfos)
       // 有值才去修改
       if (currentSong) this.setData({ currentSong })
       if (durationTime) this.setData({ durationTime })

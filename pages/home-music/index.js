@@ -1,6 +1,6 @@
 // pages/home-music/index.js
 // 放在这个位置，是为了和其它导入作区分
-import { rankingStore,rankingMap } from '../../store/index'
+import { rankingStore, rankingMap, playerStore } from '../../store/index'
 
 import { getBanners, getSongMenu } from '../../service/api_music'
 import queryRect from '../../utils/query-rect'
@@ -56,6 +56,13 @@ Page({
     wx.navigateTo({
       url: `/pages/detail-songs/index?ranking=${rankingName}&type=rank`,
     })
+  },
+
+  handleSongItemClick: function(event) {
+    const index = event.currentTarget.dataset.index
+    console.log("handleSongItemClick",index)
+    playerStore.setState("playListSongs", this.data.recommendSongs)
+    playerStore.setState("playListIndex", index) 
   },
 
   onUnload: function () {

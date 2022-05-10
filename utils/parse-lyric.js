@@ -26,7 +26,7 @@ export function parseLyric(lyricString) {
     // 2.获取歌词文
     // replace 的第一个参数也可以是 timeResult[0] 字符串，也可以是正则表达式
     const text = lineString.replace(timeRegExp, "")
-    console.log(`time:${time} -> text:${text}`)
+    // console.log(`time:${time} -> text:${text}`)
     lyricInfos.push({ time, text })
   }
 
