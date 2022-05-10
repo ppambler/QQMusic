@@ -21,10 +21,22 @@ const playerStore = new HYEventStore({
   },
   actions: {
     playMusicWithSongIdAction(ctx, { id }) {
+      if (ctx.id == id) {
+        this.dispatch("changeMusicPlayStatusAction", true)
+        return
+      }
       ctx.id = id
 
       // 0.修改播放的状态
       ctx.isPlaying = true
+
+      // 重置歌曲信息
+      ctx.currentSong = {}
+      ctx.durationTime = 0
+      ctx.lyricInfos = []
+      ctx.currentTime = 0
+      ctx.currentLyricIndex = 0
+      ctx.currentLyricText = ""
 
       // 1.根据 id 请求数据
       // 请求歌曲详情
@@ -88,8 +100,8 @@ const playerStore = new HYEventStore({
       })
     },
     // 暂停 & 播放控制
-    changeMusicPlayStatusAction(ctx) {
-      ctx.isPlaying = !ctx.isPlaying
+    changeMusicPlayStatusAction(ctx, isPlaying = true) {
+      ctx.isPlaying = isPlaying
       ctx.isPlaying ? audioContext.play(): audioContext.pause()
     }
   }
