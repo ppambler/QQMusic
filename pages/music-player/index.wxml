@@ -25,7 +25,7 @@
       <view class="subtitle">
         <view class="singer">{{currentSong.ar[0].name}}</view>
         <!-- 有些值会有书名号，有些则没有，所以我们不加了，不然会重复书名号 -->
-        <view class="alias">专辑: {{currentSong.alia[0] || currentSong.ar[0].name}}</view>
+        <view class="alias">专辑: {{currentSong.alia[0] || "未指定专辑"}}</view>
       </view>
     </view>
     <view class="lyric" wx:if="{{isMusicLyric}}">{{ currentLyricText }}</view>

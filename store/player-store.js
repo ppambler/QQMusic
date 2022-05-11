@@ -6,6 +6,9 @@ const audioContext = wx.createInnerAudioContext()
 
 const playerStore = new HYEventStore({
   state: {
+    // 控制 audioContext 的监听 -> 监听事件只添加一次就好了
+    isFirstPlay: true,
+
     id: 0,
     currentSong: {},
     durationTime: 0,
@@ -65,7 +68,10 @@ const playerStore = new HYEventStore({
       audioContext.autoplay = true
 
       // 3.监听audioContext一些事件
-      this.dispatch("setupAudioContextListenerAction")
+      if (ctx.isFirstPlay) { 
+        this.dispatch("setupAudioContextListenerAction")
+        ctx.isFirstPlay = false
+      }
     },
     setupAudioContextListenerAction(ctx) {
       // 1.监听歌曲可以播放
@@ -102,6 +108,11 @@ const playerStore = new HYEventStore({
           ctx.currentLyricText = currentLyricInfo.text
           ctx.currentLyricIndex = currentIndex
         }
+      })
+      
+      // 3.监听歌曲播放完成
+      audioContext.onEnded(() => {
+        this.dispatch("changeNewMusicAction")
       })
     },
     // 暂停 & 播放控制
