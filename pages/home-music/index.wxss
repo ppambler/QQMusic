@@ -70,3 +70,19 @@ page {
   height: 25px;
   margin-right: 10rpx;
 }
+
+/* album动画 */
+@keyframes albumRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.album-anim {
+  /* 16s 完成一个旋转 */
+  animation: albumRotate 16s linear infinite;
+}
