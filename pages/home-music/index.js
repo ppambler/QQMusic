@@ -17,11 +17,16 @@ Page({
     hotSongMenu: [],
     recommendSongMenu: [],
     rankings: { 0: {}, 2: {}, 3: {} },
-    rankingsFlag: []
+    rankingsFlag: [],
+
+    // 歌曲数据
+    currentSong: {},
   },
 
   // 生命周期函数
   onLoad: function (options) {
+    playerStore.dispatch("playMusicWithSongIdAction", { id: 1842025914 })
+
     // 获取页面数据
     this.getPageData()
 
@@ -29,17 +34,9 @@ Page({
     rankingStore.dispatch("getRankingDataAction")
 
     // 从store获取共享的数据
-    rankingStore.onState("hotRanking", (res) => {
-      // console.log(res)
-      if (!res.tracks) return
-      // 不建议用 ?. -> 用这个后续还会执行代码 -> 控制台会警告你对 recommendSons 设置成 undefined，毕竟它的默认值是 [] -> 可选链在 TS 用得比较多
-      const recommendSongs = res.tracks.slice(0, 6)
-      // console.log(recommendSongs)
-      this.setData({ recommendSongs })
-    })
-    rankingStore.onState("newRanking", this.getRankingHandler(0))
-    rankingStore.onState("originRanking", this.getRankingHandler(2))
-    rankingStore.onState("upRanking", this.getRankingHandler(3))
+    this.setupRankingStoreListener()
+    this.setupPlayerStoreListener()
+    
   },
 
   handleMoreClick: function() {
@@ -67,6 +64,26 @@ Page({
 
   onUnload: function () {
     // rankingStore.offState("newRanking", this.getNewRankingHandler)
+  },
+  setupRankingStoreListener: function() {
+    // 1. 排行榜监听
+    rankingStore.onState("hotRanking", (res) => {
+      // console.log(res)
+      if (!res.tracks) return
+      // 不建议用 ?. -> 用这个后续还会执行代码 -> 控制台会警告你对 recommendSons 设置成 undefined，毕竟它的默认值是 [] -> 可选链在 TS 用得比较多
+      const recommendSongs = res.tracks.slice(0, 6)
+      // console.log(recommendSongs)
+      this.setData({ recommendSongs })
+    })
+    rankingStore.onState("newRanking", this.getRankingHandler(0))
+    rankingStore.onState("originRanking", this.getRankingHandler(2))
+    rankingStore.onState("upRanking", this.getRankingHandler(3))
+  },
+  setupPlayerStoreListener: function() {
+    // 2. 播放器监听
+    playerStore.onStates(["currentSong"], ({currentSong}) => {
+      if (currentSong) this.setData({ currentSong })
+    })
   },
   getRankingHandler: function(idx) {
     return (res) => {
