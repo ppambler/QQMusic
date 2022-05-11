@@ -39,6 +39,9 @@ Page({
     const id = options.id
     this.setData({ id })
     
+    // 测试单曲播放
+    // playerStore.dispatch("playMusicWithSongIdAction", { id })
+
     // 2.获取歌曲信息
     this.setupPlayerStoreListener()
 
@@ -100,6 +103,14 @@ Page({
 
   handlePlayBtnClick: function() {
     playerStore.dispatch("changeMusicPlayStatusAction", !this.data.isPlaying)
+  },
+
+  // 切换上一首和下一首
+  handlePrevBtnClick: function() {
+    playerStore.dispatch("changeNewMusicAction", false)
+  },
+  handleNextBtnClick: function() {
+    playerStore.dispatch("changeNewMusicAction")
   },
   // ======================== 数据监听 ========================
   setupPlayerStoreListener: function() {

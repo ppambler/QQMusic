@@ -32,7 +32,14 @@
         {
           "name": "music-player",
           "pathName": "pages/music-player/index",
-          "query": "id=1901371647",
+          "query": "id=1907766514",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "music-player",
+          "pathName": "pages/music-player/index",
+          "query": "id=1403318151",
           "launchMode": "default",
           "scene": null
         }
