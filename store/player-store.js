@@ -2,7 +2,8 @@ import { HYEventStore } from 'hy-event-store'
 import { getSongDetail, getSongLyric } from '../service/api_player'
 import { parseLyric } from '../utils/parse-lyric'
 
-const audioContext = wx.createInnerAudioContext()
+// const audioContext = wx.createInnerAudioContext()
+const audioContext = wx.getBackgroundAudioManager()
 
 const playerStore = new HYEventStore({
   state: {
@@ -51,6 +52,7 @@ const playerStore = new HYEventStore({
       getSongDetail(id).then(res => {
         ctx.currentSong = res.songs[0]
         ctx.durationTime = res.songs[0].dt
+        audioContext.title = res.songs[0].name
       })
       // 请求歌词数据
       getSongLyric(id).then(res => {
@@ -63,6 +65,8 @@ const playerStore = new HYEventStore({
       // 在播放下一首歌之前，先把上一首歌给停止掉
       audioContext.stop()
       audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`
+      // 默认给 id 值，等到获取了歌曲详情，再给 title 一个正确的值
+      audioContext.title = id
       // 你写了 onCanplay 里的 play 方法，那这句可以不写
       // 加上这句是为了保险起见（有些设备不支持 autoplay）
       audioContext.autoplay = true
