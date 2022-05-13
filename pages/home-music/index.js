@@ -27,7 +27,7 @@ Page({
 
   // 生命周期函数
   onLoad: function (options) {
-    playerStore.dispatch("playMusicWithSongIdAction", { id: 1842025914 })
+    // playerStore.dispatch("playMusicWithSongIdAction", { id: 1842025914 })
 
     // 获取页面数据
     this.getPageData()
@@ -66,6 +66,15 @@ Page({
 
   handlePlayBtnClick: function() {
     playerStore.dispatch("changeMusicPlayStatusAction", !this.data.isPlaying)
+    // Propagation 繁殖 -> 小程序不支持这个，浏览器才会支持
+    // event.stopPropagation()
+  },
+
+  handlePlayBarClick: function() {
+    wx.navigateTo({
+      // 可以不加 id，加上也行
+      url: '/pages/music-player/index?id=' + this.data.currentSong.id,
+    })
   },
 
   onUnload: function () {
