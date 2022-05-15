@@ -78,15 +78,15 @@ Page({
     // 3.设置 context 播放 currentTime 位置的音乐
     // 在设置前，请暂停上一次播放的节奏，再跳到指定位置，不然有 bug
     // 暂停。暂停后的音频再播放会从暂停处开始播放
-    audioContext.pause()
+    // audioContext.pause()
     // 跳转到指定位置 -> 需要 s，ms 的话，值超过歌曲的时长，就不知道跳到哪儿去了
     audioContext.seek(currentTime / 1000)
 
     // 4.记录最新的 sliderValue, 并且需要将 isSliderChaning 设置回 false
     this.setData({ sliderValue: value, isSliderChanging: false })
-    if(!this.data.isPlaying) { 
-      playerStore.setState("isPlaying", true)
-    }
+    // if(!this.data.isPlaying) { 
+    //   playerStore.setState("isPlaying", true)
+    // }
   },
   handleBackBtnClick: function() {
     // 一般返回的层级为一级就行了

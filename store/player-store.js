@@ -9,6 +9,8 @@ const playerStore = new HYEventStore({
   state: {
     // 控制 audioContext 的监听 -> 监听事件只添加一次就好了
     isFirstPlay: true,
+    // 后台播放停止 -> 点击那个 x
+    isStoping: false,
 
     id: 0,
     currentSong: {},
@@ -118,11 +120,42 @@ const playerStore = new HYEventStore({
       audioContext.onEnded(() => {
         this.dispatch("changeNewMusicAction")
       })
+
+      // 4.监听音乐暂停/播放/停止
+      // 播放状态
+      audioContext.onPlay(() => {
+        console.log('onPlay')
+        ctx.isPlaying = true
+      })
+      // 暂停状态
+      audioContext.onPause(() => {
+        console.log('onPause')
+        ctx.isPlaying = false
+      })
+      // 停止状态
+      audioContext.onStop(() => {
+        ctx.isPlaying = false
+        ctx.isStoping = true
+        console.log('onStop')
+        // console.log(audioContext.src)
+        // console.log(audioContext.title)
+      })
     },
     // 暂停 & 播放控制
     changeMusicPlayStatusAction(ctx, isPlaying = true) {
       ctx.isPlaying = isPlaying
+      // console.log(audioContext.src)
+      // if (ctx.isPlaying && ctx.isStoping) {
+      //   audioContext.src = `https://music.163.com/song/media/outer/url?id=${ctx.id}.mp3`
+      //   audioContext.title = currentSong.name
+      // }
       ctx.isPlaying ? audioContext.play(): audioContext.pause()
+      if (ctx.isStoping) {
+        // console.log(ctx.currentTime)
+        // console.log(ctx.currentTime / 1000)
+        // audioContext.seek(ctx.currentTime / 1000)
+        ctx.isStoping = false
+      }
     },
     changeNewMusicAction(ctx, isNext = true) {
       // 1.获取当前索引
