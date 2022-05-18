@@ -11,7 +11,7 @@ App({
     screenHeight: 0,
     deviceRadio: 0
   },
-  onLaunch: async function () {
+  onLaunch: function () {
     const info = wx.getSystemInfoSync()
     this.globalData.statusBarHeight = info.statusBarHeight
     this.globalData.screenWidth = info.screenWidth
@@ -22,6 +22,9 @@ App({
     this.globalData.deviceRadio = deviceRadio
 
     // 2.让用户默认进行登录
+    this.handleLogin()
+  },
+  handleLogin: async function() {
     const token = wx.getStorageSync(TOKEN_KEY)
     // token 有没有过期
     const checkResult = await checkToken(token)
@@ -40,6 +43,7 @@ App({
 
     // 2.将code发送给服务器
     const result = await codeToToken(code)
+    console.log(result)
     const token = result.token
     wx.setStorageSync(TOKEN_KEY, token)
   }

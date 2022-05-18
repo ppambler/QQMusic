@@ -21,9 +21,11 @@ export function codeToToken(code) {
 }
 
 export function checkToken(token) {
-  return hyLoginRequest.post("/auth", {}, {
-    token
-  })
+  return hyLoginRequest.post("/auth", {}, true)
+}
+
+export function postFavorRequest(id) {
+  return hyLoginRequest.post("/api/favor", { id }, true)
 }
 
 export function checkSession() {
