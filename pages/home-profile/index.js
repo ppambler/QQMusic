@@ -9,4 +9,7 @@ Page({
     const userInfo = await getUserInfo()
     console.log(userInfo)
   },
+  handleGetPhoneNumber: function(event) {
+    console.log(event)
+  }
 })
