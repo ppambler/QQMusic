@@ -113,65 +113,67 @@ Page({
     playerStore.dispatch("changeNewMusicAction")
   },
   // ======================== 数据监听 ========================
+  handleCurrentMusicListener: function({ currentSong, durationTime, lyricInfos }) {
+    // console.log(lyricInfos)
+    // 有值才去修改
+    if (currentSong) this.setData({ currentSong })
+    if (durationTime) this.setData({ durationTime })
+    if (lyricInfos) this.setData({ lyricInfos })
+  },
+  handleCurrentLyricListener: function({
+    currentTime,
+    currentLyricIndex,
+    currentLyricText
+  }) {
+    // 时间变化
+    if (currentTime && !this.data.isSliderChanging) {
+      const sliderValue = currentTime / this.data.durationTime * 100
+      this.setData({ currentTime, sliderValue })
+    }
+    // 歌词变化
+    if (currentLyricIndex) {
+      this.setData({ currentLyricIndex, lyricScrollTop: currentLyricIndex * 35 })
+    }
+    if (currentLyricText) {
+      this.setData({ currentLyricText })
+    }
+  },
+  handlePlayModeListener: function(data) {
+    // console.log('222',data)
+    // 关于这个状态管理库 -> 第一次会自动执行，也就是得到两个值，下一次的执行要等数据更新后，如果只有一个数据更新，那么拿到的只是这个数据更新过来的值
+    let { playModeIndex, isPlaying } = data
+    // console.log("111",playModeIndex)
+    // 为什么不是 if (playModeIndex)？ -> playModeIndex 可以是 0，解构的时候没有对应属性那就是 undefined 值了
+    if (playModeIndex !== undefined) {
+      // console.log("playModeIndex")
+      this.setData({ playModeIndex, playModeName: playModeNames[playModeIndex] })
+    }
+
+    if (isPlaying !== undefined) {
+      // console.log('isPlaying')
+      // 一行代码过长，你可以写成这种形式
+      // 这里数据的变化无非就是更改 UI 罢了
+      this.setData({ 
+        isPlaying,
+        playingName: isPlaying ? "pause": "resume" 
+      })
+    }
+  },
   setupPlayerStoreListener: function() {
     // 1.监听 currentSong/durationTime/lyricInfos
     // 一个数据改了，就能触发事件，执行回调
-    playerStore.onStates(["currentSong", "durationTime", "lyricInfos"], ({
-      currentSong,
-      durationTime,
-      lyricInfos
-    }) => {
-      // console.log(lyricInfos)
-      // 有值才去修改
-      if (currentSong) this.setData({ currentSong })
-      if (durationTime) this.setData({ durationTime })
-      if (lyricInfos) this.setData({ lyricInfos })
-    })
+    playerStore.onStates(["currentSong", "durationTime", "lyricInfos"], this.handleCurrentMusicListener)
 
     // 2.监听 currentTime/currentLyricIndex/currentLyricText
-    playerStore.onStates(["currentTime", "currentLyricIndex", "currentLyricText"], ({
-      currentTime,
-      currentLyricIndex,
-      currentLyricText
-    }) => {
-      // 时间变化
-      if (currentTime && !this.data.isSliderChanging) {
-        const sliderValue = currentTime / this.data.durationTime * 100
-        this.setData({ currentTime, sliderValue })
-      }
-      // 歌词变化
-      if (currentLyricIndex) {
-        this.setData({ currentLyricIndex, lyricScrollTop: currentLyricIndex * 35 })
-      }
-      if (currentLyricText) {
-        this.setData({ currentLyricText })
-      }
-    })
+    playerStore.onStates(["currentTime", "currentLyricIndex", "currentLyricText"], this.handleCurrentLyricListener)
 
     // 3.监听播放模式相关的数据
     // onState 是监听一个数据的数据（对应的传参不用解构），监听多个数据是 onStates（对应的传参需要解构）
-    playerStore.onStates(["playModeIndex","isPlaying"], (data) => {
-      // console.log('222',data)
-      // 关于这个状态管理库 -> 第一次会自动执行，也就是得到两个值，下一次的执行要等数据更新后，如果只有一个数据更新，那么拿到的只是这个数据更新过来的值
-      let { playModeIndex, isPlaying } = data
-      // console.log("111",playModeIndex)
-      // 为什么不是 if (playModeIndex)？ -> playModeIndex 可以是 0，解构的时候没有对应属性那就是 undefined 值了
-      if (playModeIndex !== undefined) {
-        // console.log("playModeIndex")
-        this.setData({ playModeIndex, playModeName: playModeNames[playModeIndex] })
-      }
-
-      if (isPlaying !== undefined) {
-        // console.log('isPlaying')
-        // 一行代码过长，你可以写成这种形式
-        // 这里数据的变化无非就是更改 UI 罢了
-        this.setData({ 
-          isPlaying,
-          playingName: isPlaying ? "pause": "resume" 
-        })
-      }
-    })
+    playerStore.onStates(["playModeIndex","isPlaying"], this.handlePlayModeListener)
   },
   onUnload: function () {
+    playerStore.offStates(["currentSong", "durationTime", "lyricInfos"], this.handleCurrentMusicListener)
+    playerStore.offStates(["currentTime", "currentLyricIndex", "currentLyricText"], this.handleCurrentLyricListener)
+    playerStore.offStates(["playModeIndex","isPlaying"], this.handlePlayModeListener)
   }
 })
