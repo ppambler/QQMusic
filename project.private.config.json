@@ -23,13 +23,6 @@
           "scene": null
         },
         {
-          "name": "search",
-          "pathName": "pages/detail-search/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
           "name": "music-player",
           "pathName": "pages/music-player/index",
           "query": "id=1907766514",

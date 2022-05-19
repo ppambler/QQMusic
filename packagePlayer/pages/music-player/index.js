@@ -1,5 +1,5 @@
 // pages/music-player/index.js
-import { audioContext, playerStore } from '../../store/index'
+import { audioContext, playerStore } from '../../../store/index'
 
 // 0: 顺序播放 1: 单曲循环 2: 随机播放
 const playModeNames = ["order", "repeat", "random"]

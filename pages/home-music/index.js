@@ -53,7 +53,7 @@ Page({
 
   navigateToDetailSongsPage: function(rankingName) {
     wx.navigateTo({
-      url: `/pages/detail-songs/index?ranking=${rankingName}&type=rank`,
+      url: `/packageDetail/pages/detail-songs/index?ranking=${rankingName}&type=rank`,
     })
   },
 
@@ -73,7 +73,7 @@ Page({
   handlePlayBarClick: function() {
     wx.navigateTo({
       // 可以不加 id，加上也行
-      url: '/pages/music-player/index?id=' + this.data.currentSong.id,
+      url: '/packagePlayer/pages/music-player/index?id=' + this.data.currentSong.id,
     })
   },
 
@@ -141,7 +141,7 @@ Page({
   // 事件处理
   handleSearchClick() {
     wx.navigateTo({
-      url: '/pages/detail-search/index',
+      url: '/packageDetail/pages/detail-search/index',
     })
   },
   handleSwiperImageLoaded: function() {

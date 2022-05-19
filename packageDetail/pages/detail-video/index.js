@@ -1,5 +1,5 @@
 // pages/detail-video/index.js
-import { getMVURL, getMVDetail, getRelatedVideo } from '../../service/api_video'
+import { getMVURL, getMVDetail, getRelatedVideo } from '../../../service/api_video'
 Page({
   /**
    * 页面的初始数据
