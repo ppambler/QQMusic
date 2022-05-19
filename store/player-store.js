@@ -149,13 +149,16 @@ const playerStore = new HYEventStore({
       //   audioContext.src = `https://music.163.com/song/media/outer/url?id=${ctx.id}.mp3`
       //   audioContext.title = currentSong.name
       // }
-      ctx.isPlaying ? audioContext.play(): audioContext.pause()
       if (ctx.isStoping) {
         // console.log(ctx.currentTime)
         // console.log(ctx.currentTime / 1000)
         // audioContext.seek(ctx.currentTime / 1000)
+        audioContext.title = ctx.currentSong.name
+        audioContext.startTime = ctx.currentTime / 1000
         ctx.isStoping = false
       }
+      ctx.isPlaying ? audioContext.play(): audioContext.pause()
+      
     },
     changeNewMusicAction(ctx, isNext = true) {
       // 1.获取当前索引
