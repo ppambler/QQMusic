@@ -23,6 +23,14 @@ App({
 
     // 2.让用户默认进行登录
     this.handleLogin()
+
+    // 3.获取用户的信息
+    // wx.getUserInfo({
+    //   lang: "zh_CN",
+    //   success: (res) => {
+    //     console.log(res)
+    //   }
+    // })
   },
   handleLogin: async function() {
     const token = wx.getStorageSync(TOKEN_KEY)

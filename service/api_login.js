@@ -40,3 +40,17 @@ export function checkSession() {
     })
   })
 }
+
+export function getUserInfo() {
+  return new Promise((resolve, reject) => {
+    wx.getUserProfile({
+      desc: '获取你的用户信息……',
+      success: (res) => {
+        resolve(res)
+      },
+      fail: (err) => {
+        reject(err)
+      }
+    })
+  })
+}
