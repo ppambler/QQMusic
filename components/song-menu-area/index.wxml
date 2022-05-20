@@ -1,5 +1,5 @@
 <!--components/song-menu-area/index.wxml-->
-<area-header title="{{title}}"></area-header>
+<area-header title="{{title}}" bindtap="handleMoreClick"></area-header>
 
 <!-- <scroll-view scroll-x class="menu-list" style="width: {{screenWidth}}px;"> -->
 <scroll-view scroll-x class="menu-list">

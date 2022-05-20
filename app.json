@@ -11,7 +11,8 @@
       "pages": [
         "pages/detail-search/index",
         "pages/detail-songs/index",
-        "pages/detail-video/index"
+        "pages/detail-video/index",
+        "pages/detail-menu/index"
       ]
     },
     {
@@ -25,7 +26,10 @@
   "preloadRule": {
     "pages/home-music/index": {
       "network": "all",
-      "packages": [ "packageDetail", "packagePlayer" ]
+      "packages": [
+        "packageDetail",
+        "packagePlayer"
+      ]
     }
   },
   "window": {

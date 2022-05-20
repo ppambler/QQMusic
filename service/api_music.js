@@ -27,4 +27,8 @@ export function getSongMenuDetail(id) {
   })
 }
 
+// 获取歌单分类
+export function getSongMenuTags() {
+  return hyRequest.get("/playlist/hot")
+}
 

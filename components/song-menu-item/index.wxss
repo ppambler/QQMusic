@@ -18,7 +18,7 @@
 .top .play-counter {
   position: absolute;
   right: 0;
-  bottom: 10rpx;
+  bottom: 12rpx;
   color: #fff;
   font-size: 22rpx;
   border-radius: 12rpx;

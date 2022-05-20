@@ -51,6 +51,7 @@ const playerStore = new HYEventStore({
 
       // 1.根据 id 请求数据
       // 请求歌曲详情
+      console.log('54',id)
       getSongDetail(id).then(res => {
         ctx.currentSong = res.songs[0]
         ctx.durationTime = res.songs[0].dt
@@ -111,7 +112,8 @@ const playerStore = new HYEventStore({
         const currentIndex = i - 1
         if (ctx.currentLyricIndex !== currentIndex) {
           const currentLyricInfo = ctx.lyricInfos[currentIndex]
-          ctx.currentLyricText = currentLyricInfo.text
+          // console.log(currentLyricInfo)
+          ctx.currentLyricText = currentLyricInfo?.text
           ctx.currentLyricIndex = currentIndex
         }
       })
@@ -153,6 +155,7 @@ const playerStore = new HYEventStore({
         // console.log(ctx.currentTime)
         // console.log(ctx.currentTime / 1000)
         // audioContext.seek(ctx.currentTime / 1000)
+        audioContext.src = `https://music.163.com/song/media/outer/url?id=${ctx.id}.mp3`
         audioContext.title = ctx.currentSong.name
         audioContext.startTime = ctx.currentTime / 1000
         ctx.isStoping = false
