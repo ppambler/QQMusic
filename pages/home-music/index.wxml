@@ -72,6 +72,18 @@
     <image class="icon play" 
            src="/assets/images/music/{{ isPlaying ? 'pause': 'play' }}_icon.png"
            catchtap="handlePlayBtnClick"></image>
-    <image class="icon playlist" src="/assets/images/music/playlist_icon.png"></image>
+    <image class="icon playlist" src="/assets/images/music/playlist_icon.png" catchtap="handleSongListBtnClick"></image>
   </view>
 </view>
+
+<!-- 列表弹窗 -->
+<van-popup show="{{ show }}" bind:close="onClose" position="bottom" custom-style="max-height: 60%;">
+  <view class="popup-content">
+    <scroll-view scroll-y style="max-height: 300px;">
+      <block wx:for="{{playListSongs}}" wx:key="index">
+        <view class="popup-text {{currentSong.id == item.id ? 'active': ''}}" bindtap="handleSelectSongBtnClick" data-id="{{item.id}}">{{item.name}} - <text class="popup-name">{{item.ar[0].name}}</text></view>
+      </block>
+    </scroll-view>
+    <button class="popup-btn" bindtap="handleCloseBtnClick">关闭</button>
+  </view>
+</van-popup>

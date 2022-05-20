@@ -22,7 +22,12 @@ Page({
     // 歌曲数据
     currentSong: {},
     isPlaying: false,
-    playAnimState: "paused"
+    playAnimState: "paused",
+
+    // 播放列表
+    playListSongs: [],
+    // 弹窗
+    show: false
   },
 
   // 生命周期函数
@@ -77,8 +82,28 @@ Page({
     })
   },
 
+  // 歌曲列表
+  handleSongListBtnClick() {
+    this.setData({ show: true })
+  },
+  handleCloseBtnClick() {
+    this.setData({ show: false })
+  },
+  onClose() {
+    this.setData({ show: false })
+  },
+  handleSelectSongBtnClick(e) {
+    const id = e.currentTarget.dataset.id
+    playerStore.dispatch("playMusicWithSongIdAction", { id })
+  },
+
   onUnload: function () {
     // rankingStore.offState("newRanking", this.getNewRankingHandler)
+  },
+  handlePlayListSongsListener: function(data) {
+    this.setData({
+      playListSongs: data
+    })
   },
   setupRankingStoreListener: function() {
     // 1. 排行榜监听
@@ -105,6 +130,9 @@ Page({
         })
       }
     })
+
+    // 3.监听播放列表数据
+    playerStore.onState("playListSongs",this.handlePlayListSongsListener)
   },
   getRankingHandler: function(idx) {
     return (res) => {

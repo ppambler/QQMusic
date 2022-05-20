@@ -30,13 +30,7 @@
     </view>
     <view class="lyric" wx:if="{{isMusicLyric}}">{{ currentLyricText }}</view>
     <view class="progress">
-      <slider class="slider"
-              block-size="{{12}}"
-              value="{{sliderValue}}"
-              block-color="#26ce8a"
-              activeColor="#26ce8a"
-              bindchanging="handleSliderChanging"
-              bindchange="handleSliderChange">
+      <slider class="slider" block-size="{{12}}" value="{{sliderValue}}" block-color="#26ce8a" activeColor="#26ce8a" bindchanging="handleSliderChanging" bindchange="handleSliderChange">
       </slider>
       <view class="time">
         <view class="current">{{format.formatDuration(currentTime)}}</view>
@@ -48,20 +42,28 @@
       <image class="btn btn-prev" bindtap="handlePrevBtnClick" src="/packagePlayer/assets/images/player/play_prev.png"></image>
       <image class="btn btn-pause" src="/packagePlayer/assets/images/player/play_{{playingName}}.png" bindtap="handlePlayBtnClick"></image>
       <image class="btn btn-next" bindtap="handleNextBtnClick" src="/packagePlayer/assets/images/player/play_next.png"></image>
-      <image class="btn btn-music" src="/packagePlayer/assets/images/player/play_music.png"></image>
+      <image class="btn btn-music" src="/packagePlayer/assets/images/player/play_music.png" bindtap="handleSongListBtnClick"></image>
     </view>
   </swiper-item>
   <swiper-item class="lyric">
-    <scroll-view class="lyric-list"
-                 scroll-y
-                 scroll-top="{{lyricScrollTop}}"
-                 scroll-with-animation>
+    <scroll-view class="lyric-list" scroll-y scroll-top="{{lyricScrollTop}}" scroll-with-animation>
       <block wx:for="{{lyricInfos}}" wx:key="index">
-        <view class="item {{currentLyricIndex === index ? 'active': ''}}"
-              style="padding-top: {{index === 0 ? (contentHeight/2-80): 0}}px; padding-bottom: {{index === lyricInfos.length - 1 ? (contentHeight/2+80): 0}}px;">
+        <view class="item {{currentLyricIndex === index ? 'active': ''}}" style="padding-top: {{index === 0 ? (contentHeight/2-80): 0}}px; padding-bottom: {{index === lyricInfos.length - 1 ? (contentHeight/2+80): 0}}px;">
           {{item.text}}
         </view>
       </block>
     </scroll-view>
   </swiper-item>
 </swiper>
+
+<!-- 列表弹窗 -->
+<van-popup show="{{ show }}" bind:close="onClose" position="bottom" custom-style="max-height: 60%;">
+  <view class="popup-content">
+    <scroll-view scroll-y style="max-height: 300px;">
+      <block wx:for="{{playListSongs}}" wx:key="index">
+        <view class="popup-text {{currentSong.id == item.id ? 'active': ''}}" bindtap="handleSelectSongBtnClick" data-id="{{item.id}}">{{item.name}} - <text class="popup-name">{{item.ar[0].name}}</text></view>
+      </block>
+    </scroll-view>
+    <button class="popup-btn" bindtap="handleCloseBtnClick">关闭</button>
+  </view>
+</van-popup>

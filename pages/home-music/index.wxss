@@ -89,3 +89,39 @@ page {
   /* 16s 完成一个旋转 */
   animation: albumRotate 16s linear infinite;
 }
+
+/* 歌曲列表弹窗 */
+
+/* .van-popup {
+  background-color: white;
+} */
+
+.popup-content {
+  color: black;
+  display: flex;
+  flex-direction:column;
+  padding: 10rpx 20rpx;
+}
+
+.popup-text {
+  font-size: 14px;
+  line-height: 32px;
+}
+
+.popup-text.active {
+  color: #26ce8a;
+}
+
+.popup-name {
+  font-size: 12px;
+}
+
+.popup-content .popup-btn {
+  /* display: fixed; */
+  width: 100%;
+  height: 42px;
+  background: white;
+  font-weight: normal;
+  /* position: absolute; */
+  /* bottom: 0; */
+}

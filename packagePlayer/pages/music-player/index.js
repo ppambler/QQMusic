@@ -33,6 +33,11 @@ Page({
     // 暂停与播放控制
     isPlaying: false,
     playingName: "pause",
+
+    // 播放列表
+    playListSongs: [],
+    // 弹窗
+    show: false
   },
   onLoad: function (options) {
     // 1.获取传入的id
@@ -112,6 +117,22 @@ Page({
   handleNextBtnClick: function() {
     playerStore.dispatch("changeNewMusicAction")
   },
+
+  // 歌曲列表
+  handleSongListBtnClick() {
+    this.setData({ show: true })
+  },
+  handleCloseBtnClick() {
+    this.setData({ show: false })
+  },
+  onClose() {
+    this.setData({ show: false })
+  },
+  handleSelectSongBtnClick(e) {
+    const id = e.currentTarget.dataset.id
+    playerStore.dispatch("playMusicWithSongIdAction", { id })
+  },
+
   // ======================== 数据监听 ========================
   handleCurrentMusicListener: function({ currentSong, durationTime, lyricInfos }) {
     // console.log(lyricInfos)
@@ -159,6 +180,11 @@ Page({
       })
     }
   },
+  handlePlayListSongsListener: function(data) {
+    this.setData({
+      playListSongs: data
+    })
+  },
   setupPlayerStoreListener: function() {
     // 1.监听 currentSong/durationTime/lyricInfos
     // 一个数据改了，就能触发事件，执行回调
@@ -170,10 +196,14 @@ Page({
     // 3.监听播放模式相关的数据
     // onState 是监听一个数据的数据（对应的传参不用解构），监听多个数据是 onStates（对应的传参需要解构）
     playerStore.onStates(["playModeIndex","isPlaying"], this.handlePlayModeListener)
+
+    // 4.监听播放列表数据
+    playerStore.onState("playListSongs",this.handlePlayListSongsListener)
   },
   onUnload: function () {
     playerStore.offStates(["currentSong", "durationTime", "lyricInfos"], this.handleCurrentMusicListener)
     playerStore.offStates(["currentTime", "currentLyricIndex", "currentLyricText"], this.handleCurrentLyricListener)
     playerStore.offStates(["playModeIndex","isPlaying"], this.handlePlayModeListener)
+    playerStore.offState("playListSongs",this.handlePlayListSongsListener)
   }
 })
