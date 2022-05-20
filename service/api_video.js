@@ -2,7 +2,7 @@ import hyRequest from "./index";
 
 /**
  * 请求 MV 的排行
- * @param {number} offset 
+ * @param {number} offset
  * @param {number} [limit=10] - 默认值为 10
  */
 export function getTopMV(offset, limit = 10) {
@@ -17,8 +17,8 @@ export function getTopMV(offset, limit = 10) {
  */
 export function getMVURL(id) {
   return hyRequest.get("/mv/url", {
-    id
-  })
+    id,
+  });
 }
 
 /**
@@ -27,8 +27,8 @@ export function getMVURL(id) {
  */
 export function getMVDetail(mvid) {
   return hyRequest.get("/mv/detail", {
-    mvid
-  })
+    mvid,
+  });
 }
 /**
  * 请求相关视频
@@ -36,6 +36,14 @@ export function getMVDetail(mvid) {
  */
 export function getRelatedVideo(id) {
   return hyRequest.get("/related/allvideo", {
-    id
-  })
+    id,
+  });
+}
+
+export function getRecommendMV() {
+  return hyRequest.get("/personalized/mv");
+}
+
+export function getSimiMv(mvid) {
+  return hyRequest.get("/simi/mv", { mvid });
 }

@@ -9,3 +9,22 @@ page {
   top: 0;
   /* height: 225px; */
 }
+
+.info {
+  padding: 30rpx;
+}
+
+.info .title {
+  font-weight: 700;
+}
+
+.info .desc, .info .other {
+  font-size: 24rpx;
+  margin-top: 10rpx;
+  color: #666;
+}
+
+/* 相关视频 */
+.recommend {
+  padding: 30rpx;
+}
