@@ -35,12 +35,12 @@ Page({
 
     // 3.请求相关视频
     getSimiMv(id).then((res) => {
-      console.log(res);
+      // console.log(res);
       this.setData({ relatedVideos: res.mvs });
     });
   },
   handleVideoItemClick: function (event) {
-    console.log(event);
+    // console.log(event);
     // 获取id
     const id = event.currentTarget.dataset.item.id;
     // 页面跳转
