@@ -2,7 +2,8 @@ import { TOKEN_KEY } from '../constants/token-const'
 
 const token = wx.getStorageSync(TOKEN_KEY)
 
-const BASE_URL = "http://123.207.32.32:9001";
+// const BASE_URL = "http://123.207.32.32:9001";
+const BASE_URL = "http://codercba.com:9002";
 
 // 线上部署的
 const LOGIN_BASE_URL = "http://123.207.32.32:3000"

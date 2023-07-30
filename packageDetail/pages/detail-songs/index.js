@@ -17,6 +17,7 @@ Page({
     if (type === "menu") {
       const id = options.id
       getSongMenuDetail(id).then(res => {
+        console.log(res)
         this.setData({ songInfo: res.playlist })
       })
     } else if (type === "rank") {
